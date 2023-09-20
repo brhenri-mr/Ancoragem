@@ -76,7 +76,7 @@ function decalagem(vsdmax, vc, d, modelo) {
     }
 }
 
-function momento_secao(d, zeta, beta_x, beta_s, fyd, n, d_l, dlinha, criterio = 'positivo') {
+function momento_secao(d, zeta, beta_x, beta_s, fyd, n, d_l, dlinha, criterio) {
     /*
     Funcao que retorna o momento resistencia da secao
     d: altura util
@@ -130,6 +130,5 @@ function calculoAdimensionais(zeta, momento, eta, bw, d, fcd, Es, fyd, ecu) {
         return [bx, bz, bs, 'Tudo certo'];
     }
 }
-
 
 export {resistencia_aderencia,comprimento_necessario,decalagem,momento_secao,comprimento_de_ancoragem,calculoAdimensionais}

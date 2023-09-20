@@ -32,11 +32,11 @@ const Secao  = (props)=> {
     //Dispatch
     const dispatch = useDispatch()
     const CARACTERISTICAS = useSelector(state =>state.caracteristicasReducers.CARACTERISTICAS)
-    const [fyk,setFyk] = useState(CARACTERISTICAS['fyk']===0?'':'CA'+CARACTERISTICAS['fyk']/10)
+    const [fyk,setFyk] = useState('')
 
     //const [diametromax,setDiametromax] = useState('')
 
-    const [diametroL,setDiametroL] = useState(CARACTERISTICAS['dL']===0?'':`Ø${(CARACTERISTICAS['dL']*10).toString().replace('.',',')}`)
+    const [diametroL,setDiametroL] = useState('')
 
     const[posicaoX, setPosicaoX] = useState('')
     const[posicaoY, setPosicaoY] = useState('')
@@ -49,9 +49,10 @@ const Secao  = (props)=> {
 
     const addArmaduras = (event) =>{
         event.preventDefault()
+        console.log(fyk)
         const barra = {
             id: new Date(),
-            classeAco:fyk,
+            fyk:ClasseAço[fyk],
             Diametro:diametros[diametroL],
             PosicaoX:parseFloat(posicaoX),
             PosicaoY:parseFloat(posicaoY)*-1

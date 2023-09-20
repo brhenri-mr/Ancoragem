@@ -28,7 +28,8 @@ import Tabela_armaduras from "../Inputs/Tabela_armaduras";
 
 //Func
 import ParametrosConcreto from '../../Funções/NBR6118'
-import {calculoAdimensionais} from '../../Funções/Ancoragem'
+import {calculoAdimensionais,momento_secao} from '../../Funções/Ancoragem'
+import regressao from "../../Funções/regressao";
 
 
 
@@ -83,16 +84,13 @@ const Layout = () => {
 
 
 
-
-
-
     //useSelector
     const APOIOS = useSelector(state => state.botoesReducers.APOIOS)
     const BARRA = useSelector(state => state.barraReducers.BARRA)
     const DIAGRAMA = useSelector(state => state.botoesReducers.DIAGRAMA)
     const ARMADURA = useSelector(state => state.botoesReducers.ARMADURA)
     const CARACTERISTICAS = useSelector(state => state.caracteristicasReducers.CARACTERISTICAS)
-    console.log(CARACTERISTICAS)
+
 
 
 
@@ -101,18 +99,41 @@ const Layout = () => {
     //useState
     const [value, setValue] = useState(0)
     const estabilidade = estabilidaded(APOIOS)
-
+    
     //Class
     const NBR6118 = new ParametrosConcreto(CARACTERISTICAS['fck'],'Rural','Viga',ARMADURA['Diametro'],CARACTERISTICAS['bw'],CARACTERISTICAS['h'],CARACTERISTICAS['agregado'])
-    console.log(NBR6118)
-    const [bx,bz,bs,mensagem] = calculoAdimensionais(NBR6118.zeta,12500,NBR6118.eta,CARACTERISTICAS['bw'],CARACTERISTICAS['alturautil'],CARACTERISTICAS['fck']/14,NBR6118.Ecs,CARACTERISTICAS['fyk']/11.5,NBR6118.ecu)
-    console.log(bx)
-    
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Calculo do momento gerado pelas secao
+    if (ARMADURA.length!==0){
+
+        const [bx,bz,bs,mensagem] = calculoAdimensionais(
+            NBR6118.zeta,
+            12500,
+            NBR6118.eta,
+            CARACTERISTICAS['bw'],
+            CARACTERISTICAS['alturautil'],
+            CARACTERISTICAS['fck']/14,
+            NBR6118.Ecs,
+            ARMADURA[0]['fyk']/11.5,
+            NBR6118.ecu)
+
+        const momento_resistente = momento_secao(CARACTERISTICAS['alturautil'],NBR6118.zeta,bx,bs,ARMADURA[0]['fyk']/11.5,ARMADURA.length,ARMADURA[0]['Diametro'],1,'positivo')
+
+
+        const intercepcao = regressao(DIAGRAMA,momento_resistente)
+        console.log(intercepcao)
+        console.log(intercepcao)
+        console.log('ok')
 
 
 
+    }
+    //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    async function handleChange (event, newValue) {
+
+
+    function handleChange (event, newValue) {
         setValue(newValue);
       };
     

@@ -26,7 +26,6 @@ const DiagramaMomento= (props) =>{
 
         points.push(temp)
     
-        console.log(temp)
     
         let texto = []
         return(
