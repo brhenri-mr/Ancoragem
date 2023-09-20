@@ -106,5 +106,30 @@ function comprimento_de_ancoragem(lbnec, al, bitola, xcamada, xinferior) {
     }
 }
 
+function calculoAdimensionais(zeta, momento, eta, bw, d, fcd, Es, fyd, ecu) {
+    /*
+    Cálculo das variáveis adimensionais bx, bz, bs
+    zeta = parâmetro estabelecido na NBR6118 |
+    momento = momento solicitante na seção |
+    eta = parâmetro estabelecido na NBR6118 |
+    d = altura útil da seção |
+    fcd = resistência característica de cálculo à compressão do concreto |
+    Es = módulo elástico secante do concreto |
+    fyd = resistência ao escoamento de cálculo do aço |
+    ecu = deformação última do concreto no devido domínio |
+    */
 
-export {resistencia_aderencia,comprimento_necessario,decalagem,momento_secao,comprimento_de_ancoragem}
+    // Dados
+    if (1 - (2 * momento) / (eta * bw * Math.pow(d, 2) * fcd) <= 0 || 1 / zeta - (1 / zeta) * Math.sqrt(1 - (2 * momento) / (eta * bw * Math.pow(d, 2) * fcd)) === 0) {
+        return [0, 0, 0, 'Impossível calcular a posição da linha Neutra'];
+    } else {
+        const bx = 1 / zeta - (1 / zeta) * Math.sqrt(1 - (2 * momento) / (eta * bw * Math.pow(d, 2) * fcd));
+        const bz = 1 - 0.5 * zeta * bx;
+        const bs = Math.min(Es / fyd * (1 - bx) / bx * ecu, 1);
+
+        return [bx, bz, bs, 'Tudo certo'];
+    }
+}
+
+
+export {resistencia_aderencia,comprimento_necessario,decalagem,momento_secao,comprimento_de_ancoragem,calculoAdimensionais}

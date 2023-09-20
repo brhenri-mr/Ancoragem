@@ -3,16 +3,12 @@ import actionType from "../Constants";
 const INITIAL_STATE = {
     CARACTERISTICAS: {
         fck:0,
-        fyk:0,
         h:0,
-        dmax:0,
         bw:0,
-        dL:0,
-        dT:0,
-        classeambiental:0,
-        fykt:0,
-        agregado:0,
-        ductilidade:0
+        ductilidade:0,
+        vmax:0,
+        vmin:0,
+        agregado:'Basalto e Diabásio'
     }
 }
 

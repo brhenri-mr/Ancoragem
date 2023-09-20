@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 import actions from "../../Actions/Caracteristicas";
 //constantes
 
-import {ClasseConcreto} from "../../Constants/classSecao";
+import {ClasseConcreto,NomesAgregados} from "../../Constants/classSecao";
 
 
 const Decalagem  = (props)=> {
@@ -37,8 +37,10 @@ const Decalagem  = (props)=> {
     const [fck,setFck] = useState(CARACTERISTICAS['fck']===0?'':'C'+CARACTERISTICAS['fck'])
 
     //Cortante
-    const [cortantemax, setCortantemax] = useState('')
-    const [cortantemin, setCortantemin] = useState('')
+    const [cortantemax, setCortantemax] = useState((CARACTERISTICAS['vmax']===0)?'':CARACTERISTICAS['vmax'].toString().replace('.',','))
+    const [cortantemin, setCortantemin] = useState((CARACTERISTICAS['vmin']===0)?'':CARACTERISTICAS['vmax'].toString().replace('.',','))
+    const [agregado, setAgregado] = useState('')
+    const [alturautil, setAlturautil] = useState('')
 
     //Decalagem
     
@@ -109,12 +111,17 @@ const Decalagem  = (props)=> {
 
             //dmax:parseFloat(diametromax.replace(',','.')),
 
+         
+
 
             const item = {
                 fck:ClasseConcreto[fck],
                 h:parseFloat(alturaSecao.replace(',','.')),
                 bw:parseFloat(bw.replace(',','.')),
-
+                vmax:parseFloat(cortantemax.replace(',','.')),
+                vmin:parseFloat(cortantemin.replace(',','.')),
+                agregado:agregado,
+                alturautil: parseFloat(alturautil.replace(',','.')),
                 ductilidade:ductilidade
             }
             dispatch(actions.adicionar(item))
@@ -176,7 +183,18 @@ const Decalagem  = (props)=> {
                                             sx={{backgroundColor:'white'}}>
                                                 {Object.keys(ClasseConcreto).map((item,index)=>{return<MenuItem key={index} value={item}>{item}</MenuItem>})}
                                             </Select> 
-                                        </FormControl>
+                                    </FormControl>
+                                    <FormControl>
+                                        <InputLabel>Natureza do Agregado</InputLabel>
+                                        <Select 
+                                        value={agregado} 
+                                        onChange={(event) =>{event.preventDefault();return setAgregado(event.target.value)}} 
+                                        label="Classe de Concreto" 
+                                        variant="outlined"  
+                                        sx={{backgroundColor:'white'}}>
+                                            {NomesAgregados.map((item,index)=>{return<MenuItem key={index} value={item}>{item}</MenuItem>})}
+                                        </Select> 
+                                    </FormControl>
                                         
 
                                     </Box>
@@ -189,6 +207,15 @@ const Decalagem  = (props)=> {
                                         variant="outlined"
                                         error={erro(alturaSecao,'numeros')}
                                         helperText = {erro(alturaSecao,'numeros')?'Insira somente números':''}
+                                        sx={{backgroundColor:'white'}}/>
+                                        
+                                        <TextField 
+                                        value={alturautil} 
+                                        onChange={(event) =>{event.preventDefault();return setAlturautil(event.target.value)}} 
+                                        label="Altura util [cm]" 
+                                        variant="outlined"
+                                        error={erro(alturautil,'numeros')}
+                                        helperText = {erro(alturautil,'numeros')?'Insira somente números':''}
                                         sx={{backgroundColor:'white'}}/>
                                         
                                     </Box>

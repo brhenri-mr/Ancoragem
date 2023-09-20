@@ -18,11 +18,17 @@ import Geometria from "./Geometria";
 //redux
 
 import { useSelector } from "react-redux";
+
+//Components
 import Diagrama from "./Diagrama";
 import DiagramaMomento from "../SVG/DiagramaMomento";
 import Decalagem from "./Decalagem";
 import SecaoTransversal from "../SVG/SecaoTransversal";
 import Tabela_armaduras from "../Inputs/Tabela_armaduras";
+
+//Func
+import ParametrosConcreto from '../../Funções/NBR6118'
+import {calculoAdimensionais} from '../../Funções/Ancoragem'
 
 
 
@@ -77,12 +83,16 @@ const Layout = () => {
 
 
 
+
+
+
     //useSelector
     const APOIOS = useSelector(state => state.botoesReducers.APOIOS)
     const BARRA = useSelector(state => state.barraReducers.BARRA)
     const DIAGRAMA = useSelector(state => state.botoesReducers.DIAGRAMA)
     const ARMADURA = useSelector(state => state.botoesReducers.ARMADURA)
-    console.log(ARMADURA)
+    const CARACTERISTICAS = useSelector(state => state.caracteristicasReducers.CARACTERISTICAS)
+    console.log(CARACTERISTICAS)
 
 
 
@@ -92,9 +102,16 @@ const Layout = () => {
     const [value, setValue] = useState(0)
     const estabilidade = estabilidaded(APOIOS)
 
-
+    //Class
+    const NBR6118 = new ParametrosConcreto(CARACTERISTICAS['fck'],'Rural','Viga',ARMADURA['Diametro'],CARACTERISTICAS['bw'],CARACTERISTICAS['h'],CARACTERISTICAS['agregado'])
+    console.log(NBR6118)
+    const [bx,bz,bs,mensagem] = calculoAdimensionais(NBR6118.zeta,12500,NBR6118.eta,CARACTERISTICAS['bw'],CARACTERISTICAS['alturautil'],CARACTERISTICAS['fck']/14,NBR6118.Ecs,CARACTERISTICAS['fyk']/11.5,NBR6118.ecu)
+    console.log(bx)
     
-    //Chamar as APIs
+
+
+
+
     async function handleChange (event, newValue) {
         setValue(newValue);
       };
