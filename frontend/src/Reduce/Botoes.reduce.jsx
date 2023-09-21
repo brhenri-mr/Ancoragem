@@ -1,4 +1,5 @@
 import actionType from "../Constants";
+import organizar from "../Funções/Organizar";
 
 const INITIAL_STATE = {
     APOIOS: [],
@@ -14,7 +15,11 @@ const reducers  =(state = INITIAL_STATE, action) => {
         case actionType.REMOVER_APOIO:
             return {APOIOS: state.APOIOS.filter(x => x.id !== action.payload.id),DIAGRAMA:state.DIAGRAMA,ARMADURA:state.ARMADURA}
         case actionType.ADD_MOMENTO:
-            return {DIAGRAMA: [...state.DIAGRAMA, {...action.payload}],APOIOS:state.APOIOS,ARMADURA:state.ARMADURA}
+            //Organiza os valores
+            console.log(organizar(state.DIAGRAMA,action.payload))
+            console.log(state.DIAGRAMA)
+            console.log(action.payload)
+            return {DIAGRAMA: organizar(state.DIAGRAMA,action.payload) ,APOIOS:state.APOIOS,ARMADURA:state.ARMADURA}
         case actionType.REMOVER_MOMENTO:
             return {DIAGRAMA: state.DIAGRAMA.filter(x => x.id !== action.payload.id),APOIOS:state.APOIOS,ARMADURA:state.ARMADURA}
         case actionType.ADD_ARMADURA:

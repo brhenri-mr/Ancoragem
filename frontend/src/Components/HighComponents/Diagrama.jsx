@@ -25,8 +25,8 @@ const Diagrama = (props)=>{
     const onClickAdd = (event) =>{
         dispatch(actions.adicionar({
             id: new Date(),
-            X:comprimento,
-            Momento:momento
+            X:parseFloat(comprimento),
+            Momento: parseFloat(momento)
         }))
 
     }

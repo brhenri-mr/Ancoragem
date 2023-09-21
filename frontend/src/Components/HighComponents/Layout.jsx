@@ -91,6 +91,9 @@ const Layout = () => {
     const ARMADURA = useSelector(state => state.botoesReducers.ARMADURA)
     const CARACTERISTICAS = useSelector(state => state.caracteristicasReducers.CARACTERISTICAS)
 
+    let momento_resistente = 0
+    let intercepcao = 0
+
 
 
 
@@ -118,11 +121,10 @@ const Layout = () => {
             ARMADURA[0]['fyk']/11.5,
             NBR6118.ecu)
 
-        const momento_resistente = momento_secao(CARACTERISTICAS['alturautil'],NBR6118.zeta,bx,bs,ARMADURA[0]['fyk']/11.5,ARMADURA.length,ARMADURA[0]['Diametro'],1,'positivo')
+        momento_resistente = momento_secao(CARACTERISTICAS['alturautil'],NBR6118.zeta,bx,bs,ARMADURA[0]['fyk']/11.5,ARMADURA.length,ARMADURA[0]['Diametro'],1,'positivo')
 
 
-        const intercepcao = regressao(DIAGRAMA,momento_resistente)
-        console.log(intercepcao)
+        intercepcao = regressao(DIAGRAMA,momento_resistente)
         console.log(intercepcao)
         console.log('ok')
 
@@ -191,7 +193,7 @@ const Layout = () => {
                             <Diagrama DIAGRAMA={DIAGRAMA}></Diagrama>
                         </Grid>
                         <Grid item xs={6}>
-                            <DiagramaMomento barra={BARRA} apoios={APOIOS} escalabarra={1} DIAGRAMA={DIAGRAMA}></DiagramaMomento>
+                            <DiagramaMomento barra={BARRA} apoios={APOIOS} escalabarra={1} DIAGRAMA={DIAGRAMA} cortargrafico={false}></DiagramaMomento>
                         </Grid>
                 </Grid>
                 
@@ -210,17 +212,17 @@ const Layout = () => {
                             <SecaoTransversal bw={100} h={100} ARMADURA={ARMADURA}></SecaoTransversal>
                         </Grid>
                         <Grid item xs={12}>
-                        <DiagramaMomento barra={BARRA} apoios={APOIOS} escalabarra={1.5} DIAGRAMA={DIAGRAMA}></DiagramaMomento>
+                        <DiagramaMomento 
+                        barra={BARRA} 
+                        apoios={APOIOS} 
+                        escalabarra={1.5} 
+                        DIAGRAMA={DIAGRAMA} 
+                        cortargrafico={true} 
+                        momentoresistente={momento_resistente}
+                        momentox={intercepcao}
+                        />
                         </Grid>
                 </Grid>
-
-           
-            
-
-        
-
-                
-   
             </TabPanel>
             </Box>
         </Box>

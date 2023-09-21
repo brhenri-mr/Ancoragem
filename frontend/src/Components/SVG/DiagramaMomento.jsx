@@ -8,13 +8,56 @@ import Apoio from "../SVG/Apoios";
 
 
 const DiagramaMomento= (props) =>{
+    /*
+    DIAGRAMA: Dataset com os pontos [coordenadas x, momento]
+    BARRA: valor do comprimento da barra
+    Apoios: Dataset com os apoios da viga
+    escalabarra: escala do tamanho da barra
+    cotargrafico: Valor booleano que indica quando o grafico deve ser cortado 
+    momentoresistente: Momento resistente das secao
+    momentox: posicao do momento resistente na curva
+    */
 
 
 
     if(props.DIAGRAMA.length===0){
         return<></>
     }
+
+
+
+    //Desenha o polygon cortado
+    if(props.cortargrafico){
+        //preciso definir a regiao de corte
+        //kn.cm -> 10^-3 tf.m
+        //Momento de entrada do usuario esta em kn.cm e os do calculos tbm
+        const polygonMenor = [[50,147.5]]
+        const polygonMaior = [[props.momentox,props.momentoresistente]]
+
+
+        for(let i = 0;i<props.DIAGRAMA.length;i++){
+            if (props.DIAGRAMA[i]['MOMENTO']<props.momentoresistente){
+                polygonMenor.push(props.DIAGRAMA[i])
+
+            }
+            else{
+                polygonMaior.push(props.DIAGRAMA[i])
+            }
+        }   
+
+
+
+        return<></>
+    }
+
+
+
+
+
     else{
+        //Preciso organizar para os valores de X
+        //Saber onde tem os apois
+        //
         const points =[]
         let temp = '50,147.5 '
 
