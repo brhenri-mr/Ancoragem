@@ -31,8 +31,8 @@ const DiagramaMomento= (props) =>{
         //preciso definir a regiao de corte
         //kn.cm -> 10^-3 tf.m
         //Momento de entrada do usuario esta em kn.cm e os do calculos tbm
-        const polygonMenor = [[50,147.5]]
-        const polygonMaior = [[props.momentox,props.momentoresistente]]
+        const polygonMenor = []
+        const polygonMaior = []
 
 
         for(let i = 0;i<props.DIAGRAMA.length;i++){
@@ -63,6 +63,10 @@ const DiagramaMomento= (props) =>{
 
         for(let i=0;i<props.DIAGRAMA.length;i++){
             temp = temp+ `${(parseFloat(props.DIAGRAMA[i]['X']*props.escalabarra)+50)},${parseFloat(props.DIAGRAMA[i]["Momento"])+147.5} `
+
+            if(i+1===props.DIAGRAMA.length){
+                temp = temp+ `${(parseFloat(props.DIAGRAMA[i]['X']*props.escalabarra)+50)},${147.5} `
+            }
         }
 
         temp = temp+ '50,147.5'

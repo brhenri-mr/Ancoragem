@@ -31,7 +31,7 @@ import ParametrosConcreto from '../../Funções/NBR6118'
 import {calculoAdimensionais,momento_secao} from '../../Funções/Ancoragem'
 import regressao from "../../Funções/regressao";
 
-
+import Canvas from '../test/Test'
 
 
 
@@ -163,6 +163,7 @@ const Layout = () => {
                             <Tab label="Diagrama"  sx={{fontWeight: 'bold'}}/>
                             <Tab label="Decalagem"  sx={{fontWeight: 'bold'}}/>
                             <Tab label="Armaduras" sx={{fontWeight: 'bold'}}/>
+                            <Tab label="test" sx={{fontWeight: 'bold'}}/>
                         </Tabs>
                     </Box>
 
@@ -210,6 +211,7 @@ const Layout = () => {
                         </Grid>
                         <Grid item xs={3}>
                             <SecaoTransversal bw={100} h={100} ARMADURA={ARMADURA}></SecaoTransversal>
+                            <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
                         </Grid>
                         <Grid item xs={12}>
                         <DiagramaMomento 
@@ -222,7 +224,11 @@ const Layout = () => {
                         momentox={intercepcao}
                         />
                         </Grid>
+                    
                 </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
             </TabPanel>
             </Box>
         </Box>
