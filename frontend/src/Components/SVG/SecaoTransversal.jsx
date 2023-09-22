@@ -11,6 +11,7 @@ const SecaoTransversal =(props) => {
 
 
 
+
     return(
         <>
             
@@ -21,6 +22,8 @@ const SecaoTransversal =(props) => {
                     {props.ARMADURA.map((item,chave)=>{
                         return  <Armadura key={chave} x={155+item['PosicaoX']} y={80+item['PosicaoY']} bitola={item['Diametro']} escala={2}></Armadura>
                     })}
+
+                    <line x1={155-x/2-25} x2={155+x/2+25} y1={80-h/2+props.linhaneutra} y2={80-h/2+props.linhaneutra} style={{stroke:'gray',strokeWidth:2,strokeDasharray:"4"}}></line>
                   
                 </svg> 
 

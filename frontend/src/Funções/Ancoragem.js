@@ -131,4 +131,30 @@ function calculoAdimensionais(zeta, momento, eta, bw, d, fcd, Es, fyd, ecu) {
     }
 }
 
-export {resistencia_aderencia,comprimento_necessario,decalagem,momento_secao,comprimento_de_ancoragem,calculoAdimensionais}
+function verificacaoAdimensionais(zeta, eta, bw, d, fcd, Es, fyd, ecu,bs,As){
+
+    let bx = (As*fyd)/(eta*zeta*bw*d*fcd)*bs 
+    let bs_novo = Math.min(Es / fyd * (1 - bx) / bx * ecu, 1);
+
+    console.log(eta*zeta*bw*d*fcd)
+    console.log((As*fyd))
+
+    
+    for (let i=0; i<1000;i++){
+
+        if(bs===bs_novo){
+            return bx
+        }
+        
+        bs_novo = Math.min(Es / fyd * (1 - bx) / bx * ecu, 1);
+        bx = (As*fyd)/(eta*zeta*bw*d*fcd)*bs_novo
+
+
+       
+    }
+
+    return -1
+}
+
+
+export {resistencia_aderencia,comprimento_necessario,decalagem,momento_secao,comprimento_de_ancoragem,calculoAdimensionais,verificacaoAdimensionais}

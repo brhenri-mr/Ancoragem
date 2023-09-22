@@ -18,7 +18,8 @@ import { AlertTitle } from "@mui/material";
 //Redux
 import { useDispatch} from "react-redux";
 import { useSelector } from "react-redux";
-import {actions} from "../../Actions/Armaduras"
+import {actions as armaduras} from "../../Actions/Armaduras"
+import {actions as cadastrar} from "../../Actions/Secoes"
 
 //constantes
 
@@ -55,10 +56,16 @@ const Secao  = (props)=> {
             fyk:ClasseAço[fyk],
             Diametro:diametros[diametroL],
             PosicaoX:parseFloat(posicaoX),
-            PosicaoY:parseFloat(posicaoY)*-1
+            PosicaoY:parseFloat(posicaoY)*-1,
+            pontos:[]
 
         }
-        dispatch(actions.adicionar(barra))
+        dispatch(armaduras.adicionar(barra))
+    }
+
+    const cadastrarSecao = (event) =>{
+        event.preventDefault()
+        dispatch(cadastrar.adicionar(1))
     }
 
 
@@ -158,6 +165,7 @@ const Secao  = (props)=> {
                                     </Box>
                                     <Box component="form" sx={{'& > :not(style)': { m: 1, width: '21ch' }, }}noValidate autoComplete="off">
                                         <Button variant="contained" onClick={addArmaduras}>Adicionar</Button>
+                                        <Button variant="contained" onClick={cadastrarSecao}>Cadastrar</Button>
                                     </Box>
                                     
                                 </item>

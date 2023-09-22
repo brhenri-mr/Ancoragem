@@ -12,12 +12,9 @@ function regressao(bd,momento){
 
     const degree = data.length>3? 2:1
 
-    console.log(degree)
 
     // Realiza a regressão polinomial
     const result = regression.polynomial(data, { order: degree });
-    console.log(data)
-    console.log(result)
 
     // Coeficientes do polinômio
     const coefficients = result.equation;

@@ -1,7 +1,10 @@
 import Paper from "paper";
 
 
-  const viga = (barra) => {
+  const viga = (entradas) => {
+
+    const escala = entradas[1]
+    const barra = entradas[0]
 
 
 
@@ -12,11 +15,12 @@ import Paper from "paper";
     // Crie a linha
     const line = new Paper.Path.Line(startPoint, endPoint);
 
+
+
+    line.scale(escala,line.bounds.leftCenter)
     line.strokeColor = 'black'
     line.strokeWidth = 4
     line.strokeCap = 'round';
-
-  
 
   Paper.view.draw();
 };

@@ -28,7 +28,7 @@ import Tabela_armaduras from "../Inputs/Tabela_armaduras";
 
 //Func
 import ParametrosConcreto from '../../Funções/NBR6118'
-import {calculoAdimensionais,momento_secao} from '../../Funções/Ancoragem'
+import {calculoAdimensionais,momento_secao,verificacaoAdimensionais} from '../../Funções/Ancoragem'
 import regressao from "../../Funções/regressao";
 
 import Canvas from '../test/Test'
@@ -90,12 +90,15 @@ const Layout = () => {
     const DIAGRAMA = useSelector(state => state.botoesReducers.DIAGRAMA)
     const ARMADURA = useSelector(state => state.botoesReducers.ARMADURA)
     const CARACTERISTICAS = useSelector(state => state.caracteristicasReducers.CARACTERISTICAS)
+    const SECAO = useSelector(state => state.botoesReducers.SECAO)
+    const CADASTRO = useSelector(state => state.botoesReducers.CADASTRO)
+
+    console.log(SECAO)
 
     let momento_resistente = 0
     let intercepcao = 0
 
-
-
+    let escalabarra = (500/BARRA>1)? 1:500/BARRA
 
 
 
@@ -106,11 +109,21 @@ const Layout = () => {
     //Class
     const NBR6118 = new ParametrosConcreto(CARACTERISTICAS['fck'],'Rural','Viga',ARMADURA['Diametro'],CARACTERISTICAS['bw'],CARACTERISTICAS['h'],CARACTERISTICAS['agregado'])
 
+    let bx
+    let linhanneutra
+    let As
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Calculo do momento gerado pelas secao
     if (ARMADURA.length!==0){
 
-        const [bx,bz,bs,mensagem] = calculoAdimensionais(
+        As = 3.1415*0.25*ARMADURA[0]['Diametro']**2*ARMADURA.length  //cm²
+
+
+
+
+
+        let [bx,bz,bs,mensagem] = calculoAdimensionais(
             NBR6118.zeta,
             12500,
             NBR6118.eta,
@@ -125,8 +138,28 @@ const Layout = () => {
 
 
         intercepcao = regressao(DIAGRAMA,momento_resistente)
-        console.log(intercepcao)
-        console.log('ok')
+
+        bx = verificacaoAdimensionais(
+            NBR6118.zeta,
+            NBR6118.eta,
+            CARACTERISTICAS['bw'],
+            CARACTERISTICAS['alturautil'],
+            CARACTERISTICAS['fck']/14,
+            NBR6118.Ecs,
+            ARMADURA[0]['fyk']/11.5,
+            NBR6118.ecu,
+            bs,
+            As)
+
+        linhanneutra = (bx*CARACTERISTICAS['alturautil'])
+
+        console.log(bx)
+
+        if(linhanneutra<0){
+            console.log('ERRO')
+            linhanneutra = 0
+        }
+
 
 
 
@@ -194,7 +227,7 @@ const Layout = () => {
                             <Diagrama DIAGRAMA={DIAGRAMA}></Diagrama>
                         </Grid>
                         <Grid item xs={6}>
-                            <DiagramaMomento barra={BARRA} apoios={APOIOS} escalabarra={1} DIAGRAMA={DIAGRAMA} cortargrafico={false}></DiagramaMomento>
+                            <DiagramaMomento barra={BARRA} apoios={APOIOS} escalabarra={escalabarra} DIAGRAMA={DIAGRAMA} cortargrafico={false}></DiagramaMomento>
                         </Grid>
                 </Grid>
                 
@@ -210,14 +243,14 @@ const Layout = () => {
                             <Tabela_armaduras Apoios={ARMADURA} label={['X [cm]','Y [cm]','Ação']} rotulos={['PosicaoX','PosicaoY']}></Tabela_armaduras>
                         </Grid>
                         <Grid item xs={3}>
-                            <SecaoTransversal bw={100} h={100} ARMADURA={ARMADURA}></SecaoTransversal>
+                            <SecaoTransversal bw={100} h={100} linhaneutra={linhanneutra} ARMADURA={ARMADURA}></SecaoTransversal>
                             <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
                         </Grid>
                         <Grid item xs={12}>
                         <DiagramaMomento 
                         barra={BARRA} 
                         apoios={APOIOS} 
-                        escalabarra={1.5} 
+                        escalabarra={escalabarra} 
                         DIAGRAMA={DIAGRAMA} 
                         cortargrafico={true} 
                         momentoresistente={momento_resistente}
@@ -228,7 +261,7 @@ const Layout = () => {
                 </Grid>
             </TabPanel>
             <TabPanel value={value} index={4}>
-                <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
+                <Canvas  barra={BARRA} momentoresistente={momento_resistente} ue={1}  ></ Canvas>
             </TabPanel>
             </Box>
         </Box>
