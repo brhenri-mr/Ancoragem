@@ -20,26 +20,27 @@ const Canvas = (props) => {
 
 
 
-  
   useEffect(() => {
 
-    
-    const canvas = canvasRef.current;
-    Paper.setup(canvas);
-    const inter = draw1(props.momentoresistente, props.barra,DIAGRAMA,escalabarra);
-
-    console.log(CADASTRAR)
-
-    if(CADASTRAR){
-      console.log('?')
-      dispatch(cadastrar.cadastrar(inter))
-
-
-
+    if(DIAGRAMA.length!==0){
+      const canvas = canvasRef.current;
+      Paper.setup(canvas);
+      const inter = draw1(props.momentoresistente, props.barra,DIAGRAMA,escalabarra);
+  
+      console.log(CADASTRAR)
+  
+      if(CADASTRAR){
+        console.log('?')
+        dispatch(cadastrar.cadastrar(inter))
+  
+  
+  
+      }
+  
+  
+      viga([props.barra,escalabarra]);
     }
-
-
-    viga([props.barra,escalabarra]);
+   
   }, [props.momentoresistente, props.barra]);
 
 

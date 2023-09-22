@@ -23,7 +23,7 @@ import Paper from "paper";
       fillColor: '#cc3333',
     
       strokeColor:'black',
-      opacity:0.7,
+      opacity:1,
       closed: true,
       strokeWidth:1
   });
@@ -57,7 +57,7 @@ import Paper from "paper";
     [parseFloat(barra)+50, (momento_resistente*0.001)+147.5],
     [50,(momento_resistente*0.001)+147.5]],
     fillColor: '#33cc33',
-    opacity:0.7,
+    opacity:1,
     closed: true,
    
   });

@@ -24,7 +24,7 @@ const SecaoTransversal =(props) => {
                     })}
 
                     <line x1={155-x/2-25} x2={155+x/2+25} y1={80-h/2+props.linhaneutra} y2={80-h/2+props.linhaneutra} style={{stroke:'gray',strokeWidth:2,strokeDasharray:"4"}}></line>
-                  
+                    <text x={155-x/2-25} y={75-h/2+props.linhaneutra} font-size="smaller">LN</text>
                 </svg> 
 
         </>

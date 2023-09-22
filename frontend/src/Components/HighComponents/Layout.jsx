@@ -34,6 +34,21 @@ import regressao from "../../Funções/regressao";
 import Canvas from '../test/Test'
 
 
+function secao_cadastrada(secao,armadura,alerta,alertavalido){
+
+    if(alertavalido){
+        return alerta
+    }
+    else if(secao.length!==0 && armadura.length===0){
+        return true
+    }
+
+
+    return false
+}
+
+
+
 
 function estabilidaded(el){
     ///vetor com o tipo de apoios
@@ -91,9 +106,9 @@ const Layout = () => {
     const ARMADURA = useSelector(state => state.botoesReducers.ARMADURA)
     const CARACTERISTICAS = useSelector(state => state.caracteristicasReducers.CARACTERISTICAS)
     const SECAO = useSelector(state => state.botoesReducers.SECAO)
-    const CADASTRO = useSelector(state => state.botoesReducers.CADASTRO)
+    const CADASTRAR = useSelector(state => state.botoesReducers.CADASTRAR)
 
-    console.log(SECAO)
+    console.log(CADASTRAR)
 
     let momento_resistente = 0
     let intercepcao = 0
@@ -105,6 +120,10 @@ const Layout = () => {
     //useState
     const [value, setValue] = useState(0)
     const estabilidade = estabilidaded(APOIOS)
+    const [alerta,setAlerta] = useState(true)
+    
+
+
     
     //Class
     const NBR6118 = new ParametrosConcreto(CARACTERISTICAS['fck'],'Rural','Viga',ARMADURA['Diametro'],CARACTERISTICAS['bw'],CARACTERISTICAS['h'],CARACTERISTICAS['agregado'])
@@ -237,31 +256,35 @@ const Layout = () => {
                 <Decalagem/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <Secao></Secao>
-                            <Tabela_armaduras Apoios={ARMADURA} label={['X [cm]','Y [cm]','Ação']} rotulos={['PosicaoX','PosicaoY']}></Tabela_armaduras>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <SecaoTransversal bw={100} h={100} linhaneutra={linhanneutra} ARMADURA={ARMADURA}></SecaoTransversal>
-                            <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
-                        </Grid>
-                        <Grid item xs={12}>
-                        <DiagramaMomento 
-                        barra={BARRA} 
-                        apoios={APOIOS} 
-                        escalabarra={escalabarra} 
-                        DIAGRAMA={DIAGRAMA} 
-                        cortargrafico={true} 
-                        momentoresistente={momento_resistente}
-                        momentox={intercepcao}
-                        />
-                        </Grid>
-                    
-                </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                <Canvas  barra={BARRA} momentoresistente={momento_resistente} ue={1}  ></ Canvas>
+                <Collapse in={CADASTRAR&&alerta}>
+                    <Alert severity="info" onClose={() => {setAlerta(false)}}>Seção Cadastrada</Alert>
+                    <br></br>
+                </Collapse>
+                <Collapse in={CARACTERISTICAS['fck']!==0}>
+                    <Grid container spacing={2}>
+                            
+                            <Grid item xs={6}>
+                                <Secao></Secao>
+                                <Tabela_armaduras Apoios={ARMADURA} label={['X [cm]','Y [cm]','Ação']} rotulos={['PosicaoX','PosicaoY']}></Tabela_armaduras>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <SecaoTransversal bw={100} h={100} linhaneutra={linhanneutra} ARMADURA={ARMADURA}></SecaoTransversal>
+                                <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
+                            </Grid>
+                            <Grid item xs={12}>
+                            <DiagramaMomento 
+                            barra={BARRA} 
+                            apoios={APOIOS} 
+                            escalabarra={escalabarra} 
+                            DIAGRAMA={DIAGRAMA} 
+                            cortargrafico={true} 
+                            momentoresistente={momento_resistente}
+                            momentox={intercepcao}
+                            />
+                            </Grid>
+                        
+                    </Grid>
+                </Collapse>
             </TabPanel>
             </Box>
         </Box>
