@@ -32,6 +32,9 @@ import {calculoAdimensionais,momento_secao,verificacaoAdimensionais} from '../..
 import regressao from "../../Funções/regressao";
 
 import Canvas from '../test/Test'
+import BarChart from '../test/3djs'
+import DraggableLineChart from "../test/limites";
+import AncoragemViga from "../test/AncoragemViga";
 
 
 function secao_cadastrada(secao,armadura,alerta,alertavalido){
@@ -285,6 +288,11 @@ const Layout = () => {
                         
                     </Grid>
                 </Collapse>
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+
+                    <AncoragemViga></AncoragemViga>
+
             </TabPanel>
             </Box>
         </Box>

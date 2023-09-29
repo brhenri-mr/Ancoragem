@@ -11,11 +11,13 @@ import Paper from "paper";
     //---------------------------------------------------GRAFICO--------------------------------------------------
 
 
-    const pontos_grafico = []
+    const pontos_grafico = [[50,147.5]]
 
     DIAGRAMA.forEach(element => {
       pontos_grafico.push([element['X']+50,element['Momento']+147.5])
     });
+
+    console.log(pontos_grafico)
 
 
     let myPath = new Paper.Path({
@@ -108,6 +110,8 @@ import Paper from "paper";
     
   });
 
+  console.log(inter_escalado)
+
 
 // ------------------------------------------COTAS-----------------------------------------------------------------------------------------
 
@@ -153,6 +157,7 @@ import Paper from "paper";
   comprimento.justification = 'center'; // Alinhamento horizontal (center, left, right)
 
   //--------------------------------------------------------COTA ESQUERDA ------------------------------------------------------------------
+  if(inter_escalado.length>1){
 
   const cotai_f = new Paper.Point(inter_escalado[1].point.x, 50)
   const cotaf_f = new Paper.Point((parseFloat(barra)*escala+50), 50)
@@ -190,6 +195,8 @@ import Paper from "paper";
     
     // Você pode ajustar outras propriedades de texto, como alinhamento, fonte, etc.
     comprimento.justification = 'center'; // Alinhamento horizontal (center, left, right)
+  }
+  
   
   
 
