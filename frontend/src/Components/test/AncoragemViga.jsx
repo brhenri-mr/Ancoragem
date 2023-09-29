@@ -47,11 +47,16 @@ const AncoragemViga = ()=>{
         const deltaX = e.clientX - initialMouseX;
         const newLineX1 = initialLineX1 + deltaX;
         const newLineX2 = initialLineX2 + deltaX;
-        line
+        console.log(newLineX1)
+        if(newLineX1>=100 & newLineX1<=300){
+            line
             .attr('x1', newLineX1)
             .attr('x2', newLineX2);
-        armadura
+            armadura
             .attr('x2',newLineX2+10);
+        }
+
+   
         }
        
     };
