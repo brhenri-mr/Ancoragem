@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-function limite(svg,x){
+function limite(svg,x,y){
 
     let isDragging = false;
     let initialMouseX = x;
@@ -11,9 +11,9 @@ function limite(svg,x){
     const line = svg
       .append('line')
       .attr('x1', initialLineX1)
-      .attr('y1', 25)
+      .attr('y1', y-75)
       .attr('x2', initialLineX2)
-      .attr('y2', 175)
+      .attr('y2', y+75)
       .attr('stroke', 'black')
       .attr('stroke-width', 2)
       .attr("opacity", 0.8)

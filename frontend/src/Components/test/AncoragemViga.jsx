@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import Viga from './3djs';
 import limite from './limites';
 import Armaduras from './Armaduras';
+import Cota from './cota';
 
 
 const AncoragemViga = ()=>{
@@ -15,7 +16,7 @@ const AncoragemViga = ()=>{
 
     useEffect(() => {
 //---------------------------JANELA---------------------------------------
-        const width = 400;
+        const width = 700;
         const height = 200;
         let isDragging = false;
         let initialMouseX = 100
@@ -31,18 +32,38 @@ const AncoragemViga = ()=>{
         Viga(svg,width,height)
 
 
-        let posicoes = [100,150,250,300]
+        let posicoes = [100,350,450,600]
 
         let linha = []
 
-        let barras = [Armaduras(svg,100,300,0)]
+        let barras = [Armaduras(svg,posicoes[0],posicoes[posicoes.length-1],height/2,0)]
 
         let indice
-  
+
+        let cotas = []
+        
+        for(let i=0;i<posicoes.length;i++){
+            if(i===0){
+                cotas.push(Cota(svg,50,posicoes[i]))
+                cotas.push(Cota(svg,posicoes[i],posicoes[i+1]))
+            }
+            else if(i+1===posicoes.length){
+                cotas.push(Cota(svg,posicoes[i],650))
+            }
+            else{
+
+                cotas.push(Cota(svg,posicoes[i],posicoes[i+1]))
+                
+            
+            }
+        }
+
+
+
         
 
         posicoes.forEach((item,chave)=>{
-            linha.push(limite(svg,item))
+            linha.push(limite(svg,item,height/2))
         })
 
         //----------------------------------------------------------------------------------------------------------
@@ -65,9 +86,12 @@ const AncoragemViga = ()=>{
                 svg,
                 parseFloat(segmentos[i-1].attr('x2')),
                 parseFloat(segmentos[i].attr('x2')),
+                height/2,
                 15))
         }
+//-----------------------------------------------------------------------
 
+        
 
 
 
@@ -104,7 +128,7 @@ const AncoragemViga = ()=>{
                 if((initialLineX1 + deltaX)<=posicoes[indice]){
 
                     if(indice!==0 & indice !==linha.length-1){
-                        console.log((initialLineX1 + deltaX))
+                        
                         if((initialLineX1 + deltaX)>=posicoes[indice-1]){
                         newLineX1 = initialLineX1 + deltaX;
                         newLineX2 = initialLineX2 + deltaX;
@@ -159,22 +183,57 @@ const AncoragemViga = ()=>{
 
           
 
-        if(newLineX1>=100 & newLineX1<=300){
+        if(newLineX1>=0 & newLineX1<=900){
             linha[indice]
             .attr('x1', newLineX1)
             .attr('x2', newLineX2);
 
+            cotas[indice][0].attr('x2',newLineX1)
+
             if(indice<linha.length/2){
                 barras[indices_barras[indice]]
                 .attr('x1',newLineX1-10);
+
+                cotas[indice][0].attr('x2',newLineX1);
+                cotas[indice][2]
+                .attr('x2',newLineX1)
+                .attr('x1',newLineX1);
+                cotas[indice+1][0].attr('x1',newLineX1);
+                cotas[indice+1][1]
+                .attr('x2',newLineX1)
+                .attr('x1',newLineX1);
+
+                cotas[indice][3].text(`${cotas[indice][0].attr('x2')-cotas[indice][0].attr('x1')}`)
+                .attr("x", (parseFloat(cotas[indice][0].attr('x2'))-parseFloat(cotas[indice][0].attr('x1')))/2+parseFloat(cotas[indice][0].attr('x1')));
+                cotas[indice+1][3].text(`${cotas[indice+1][0].attr('x2')-cotas[indice+1][0].attr('x1')}`)
+                .attr("x", (parseFloat(cotas[indice+1][0].attr('x2'))-parseFloat(cotas[indice+1][0].attr('x1')))/2+parseFloat(cotas[indice+1][0].attr('x1')));
+
             }
             else{ 
-                console.log('aqui')
 
                 barras[indices_barras[indice]]
                 .attr('x2',newLineX2+10);
+
+                cotas[indice][0].attr('x2',newLineX1);
+                cotas[indice+1][0].attr('x1',newLineX1);
+
+                cotas[indice][2]
+                .attr('x2',newLineX1)
+                .attr('x1',newLineX1);
+                
+                cotas[indice+1][1]
+                .attr('x2',newLineX1)
+                .attr('x1',newLineX1);
+
+                cotas[indice][3]
+                .text(`${cotas[indice][0].attr('x2')-cotas[indice][0].attr('x1')}`)
+                .attr("x", (parseFloat(cotas[indice][0].attr('x2'))-parseFloat(cotas[indice][0].attr('x1')))/2+parseFloat(cotas[indice][0].attr('x1')));
+                cotas[indice+1][3]
+                .text(`${cotas[indice+1][0].attr('x2')-cotas[indice+1][0].attr('x1')}`)
+                .attr("x", (parseFloat(cotas[indice+1][0].attr('x2'))-parseFloat(cotas[indice+1][0].attr('x1')))/2+parseFloat(cotas[indice+1][0].attr('x1')));
+              
             }
-            
+
            
         }
 
@@ -190,12 +249,13 @@ const AncoragemViga = ()=>{
     svg.node().addEventListener('mousedown', handleMouseDown);
     svg.node().addEventListener('mousemove', handleMouseMove);
     svg.node().addEventListener('mouseup', handleMouseUp);
+
+
+
+    svg.attr("transform", `scale(${1})`);
     
 
     })
-
-
-
 
     return(
         <svg ref={svgRef}></svg>

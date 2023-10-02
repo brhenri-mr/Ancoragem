@@ -111,7 +111,9 @@ const Layout = () => {
     const SECAO = useSelector(state => state.botoesReducers.SECAO)
     const CADASTRAR = useSelector(state => state.botoesReducers.CADASTRAR)
 
-    console.log(CADASTRAR)
+    console.log(ARMADURA)
+    console.log(SECAO)
+
 
     let momento_resistente = 0
     let intercepcao = 0
@@ -175,7 +177,6 @@ const Layout = () => {
 
         linhanneutra = (bx*CARACTERISTICAS['alturautil'])
 
-        console.log(bx)
 
         if(linhanneutra<0){
             console.log('ERRO')
@@ -273,17 +274,11 @@ const Layout = () => {
                             <Grid item xs={3}>
                                 <SecaoTransversal bw={100} h={100} linhaneutra={linhanneutra} ARMADURA={ARMADURA}></SecaoTransversal>
                                 <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
+                                <AncoragemViga></AncoragemViga>
+                                
                             </Grid>
-                            <Grid item xs={12}>
-                            <DiagramaMomento 
-                            barra={BARRA} 
-                            apoios={APOIOS} 
-                            escalabarra={escalabarra} 
-                            DIAGRAMA={DIAGRAMA} 
-                            cortargrafico={true} 
-                            momentoresistente={momento_resistente}
-                            momentox={intercepcao}
-                            />
+                            <Grid item xs={3}>
+                                
                             </Grid>
                         
                     </Grid>

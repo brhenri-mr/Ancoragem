@@ -5,7 +5,7 @@ function Viga(svg,width, height) {
 
 
     // Criar um retângulo
-    const rectWidth = 200;
+    const rectWidth = 600;
     const rectHeight = 50;
     const rectX = (width - rectWidth) / 2;
     const rectY = (height - rectHeight) / 2;

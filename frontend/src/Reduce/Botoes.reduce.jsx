@@ -38,7 +38,7 @@ const reducers  =(state = INITIAL_STATE, action) => {
                 APOIOS:state.APOIOS,
                 ARMADURA:[],
                 CADASTRAR: true,
-                SECAO:[...state.SECAO,...state.ARMADURA]
+                SECAO:[...state.SECAO,[...state.ARMADURA]]
             }
 
         case actionType.REMOVER_SECAO:

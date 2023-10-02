@@ -17,8 +17,6 @@ import Paper from "paper";
       pontos_grafico.push([element['X']+50,element['Momento']+147.5])
     });
 
-    console.log(pontos_grafico)
-
 
     let myPath = new Paper.Path({
       segments: pontos_grafico,
@@ -110,7 +108,6 @@ import Paper from "paper";
     
   });
 
-  console.log(inter_escalado)
 
 
 // ------------------------------------------COTAS-----------------------------------------------------------------------------------------
