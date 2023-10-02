@@ -16,6 +16,7 @@ function limite(svg,x){
       .attr('y2', 175)
       .attr('stroke', 'black')
       .attr('stroke-width', 2)
+      .attr("opacity", 0.8)
       .attr('stroke-dasharray', '5,5');
 
 
