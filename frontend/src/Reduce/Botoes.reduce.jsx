@@ -52,6 +52,9 @@ const reducers  =(state = INITIAL_STATE, action) => {
 
         case actionType.CADASTRAR:
 
+            console.log('REDUX')
+            console.log(action.payload)
+
             state.SECAO[state.SECAO.length-1]['pontos'] = action.payload
 
             console.log(state.SECAO)

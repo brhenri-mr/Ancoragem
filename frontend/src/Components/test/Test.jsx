@@ -5,6 +5,7 @@ import viga from '../Drawning/Viga'
 import { useSelector } from "react-redux";
 import { useDispatch} from "react-redux";
 import {actions as cadastrar} from "../../Actions/Secoes"
+import { useState } from 'react';
 
 const Canvas = (props) => {
   
@@ -15,22 +16,28 @@ const Canvas = (props) => {
   const CADASTRAR = useSelector(state => state.botoesReducers.CADASTRAR)
   const dispatch = useDispatch()
 
-  let escalabarra = (500/BARRA>1)? 1:500/BARRA
+  const [inter,setInter] = useState('')
 
+  let escalabarra = (500/BARRA>1)? 1:500/BARRA
+  console.log(CADASTRAR)
+  console.log(DIAGRAMA)
 
 
 
   useEffect(() => {
 
     if(DIAGRAMA.length!==0){
+      console.log('?')
       const canvas = canvasRef.current;
       Paper.setup(canvas);
-      const inter = draw1(props.momentoresistente, props.barra,DIAGRAMA,escalabarra);
-  
-      console.log(CADASTRAR)
+      if(!CADASTRAR){
+      setInter(draw1(props.momentoresistente, props.barra,DIAGRAMA,escalabarra))
+      }
+
   
       if(CADASTRAR){
         console.log('?')
+        console.log(inter)
         dispatch(cadastrar.cadastrar(inter))
   
   

@@ -6,13 +6,28 @@ import Armaduras from './Armaduras';
 import Cota from './cota';
 
 
-const AncoragemViga = ()=>{
+const AncoragemViga = (props)=>{
     /*
-    Componentye que retorna os desenhos da ancoragem
+    Componente que retorna os desenhos da ancoragem
     Parto do principio que sempre existira dois pontos para cada limite
     logo todo limite sera PAR
     */
     const svgRef = useRef();
+
+
+    console.log(props.secao)
+    
+    
+
+    let teste_limite = [0]
+
+    props.secao.forEach((item,chave)=>{
+        console.log(item['pontos'][0].point.x)
+        console.log(item['pontos'][1].point.x)
+    })
+
+    
+
 
     useEffect(() => {
 //---------------------------JANELA---------------------------------------

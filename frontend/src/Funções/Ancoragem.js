@@ -136,8 +136,7 @@ function verificacaoAdimensionais(zeta, eta, bw, d, fcd, Es, fyd, ecu,bs,As){
     let bx = (As*fyd)/(eta*zeta*bw*d*fcd)*bs 
     let bs_novo = Math.min(Es / fyd * (1 - bx) / bx * ecu, 1);
 
-    console.log(eta*zeta*bw*d*fcd)
-    console.log((As*fyd))
+
 
     
     for (let i=0; i<1000;i++){

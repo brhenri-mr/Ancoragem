@@ -111,7 +111,6 @@ const Layout = () => {
     const SECAO = useSelector(state => state.botoesReducers.SECAO)
     const CADASTRAR = useSelector(state => state.botoesReducers.CADASTRAR)
 
-    console.log(ARMADURA)
     console.log(SECAO)
 
 
@@ -274,7 +273,7 @@ const Layout = () => {
                             <Grid item xs={3}>
                                 <SecaoTransversal bw={100} h={100} linhaneutra={linhanneutra} ARMADURA={ARMADURA}></SecaoTransversal>
                                 <Canvas barra={BARRA} momentoresistente={momento_resistente}></ Canvas>
-                                <AncoragemViga></AncoragemViga>
+           
                                 
                             </Grid>
                             <Grid item xs={3}>
@@ -286,7 +285,7 @@ const Layout = () => {
             </TabPanel>
             <TabPanel value={value} index={4}>
 
-                    <AncoragemViga></AncoragemViga>
+                    <AncoragemViga secao={SECAO}></AncoragemViga>
 
             </TabPanel>
             </Box>

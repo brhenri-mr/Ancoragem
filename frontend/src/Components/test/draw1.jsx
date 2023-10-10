@@ -100,6 +100,7 @@ import Paper from "paper";
   // Encontre as interseções entre a linha e o caminho
   const intersections = myPath.getIntersections(line);
 
+
   const inter_escalado = myPath.getIntersections(linha_escalada);
 
   inter_escalado.forEach(intersection => {
@@ -107,6 +108,7 @@ import Paper from "paper";
     circle.fillColor = 'black';
     
   });
+
 
 
 
