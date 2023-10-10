@@ -4,6 +4,10 @@ import Viga from './3djs';
 import limite from './limites';
 import Armaduras from './Armaduras';
 import Cota from './cota';
+import { decalagem } from '../../Funções/Ancoragem';
+//redux
+
+import { useSelector } from "react-redux";
 
 
 const AncoragemViga = (props)=>{
@@ -13,6 +17,7 @@ const AncoragemViga = (props)=>{
     logo todo limite sera PAR
     */
     const svgRef = useRef();
+    const CARACTERISTICAS = useSelector(state => state.caracteristicasReducers.CARACTERISTICAS)
 
 
     console.log(props.secao)
@@ -49,7 +54,11 @@ const AncoragemViga = (props)=>{
 
         let posicoes = [100,300,350,400,450,600]
 
-        let ancoragem = 15
+       console.log(CARACTERISTICAS)
+
+        let ancoragem = 15 +decalagem(CARACTERISTICAS['vmax'],CARACTERISTICAS['vmin'],CARACTERISTICAS['alturautil'],'Modelo 1')
+
+        console.log(ancoragem)
 
         let linha = []
 

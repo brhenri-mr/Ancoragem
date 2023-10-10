@@ -8,7 +8,8 @@ const INITIAL_STATE = {
         ductilidade:0,
         vmax:0,
         vmin:0,
-        agregado:'Basalto e Diabásio'
+        agregado:'Basalto e Diabásio',
+        alturautil:0
     }
 }
 

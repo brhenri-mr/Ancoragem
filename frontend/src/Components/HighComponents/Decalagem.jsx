@@ -37,10 +37,10 @@ const Decalagem  = (props)=> {
     const [fck,setFck] = useState(CARACTERISTICAS['fck']===0?'':'C'+CARACTERISTICAS['fck'])
 
     //Cortante
-    const [cortantemax, setCortantemax] = useState((CARACTERISTICAS['vmax']===0)?'':CARACTERISTICAS['vmax'].toString().replace('.',','))
-    const [cortantemin, setCortantemin] = useState((CARACTERISTICAS['vmin']===0)?'':CARACTERISTICAS['vmax'].toString().replace('.',','))
+    const [cortantemax, setCortantemax] = useState(CARACTERISTICAS['vmax'])
+    const [cortantemin, setCortantemin] = useState(CARACTERISTICAS['vmin'])
     const [agregado, setAgregado] = useState('')
-    const [alturautil, setAlturautil] = useState('')
+    const [alturautil, setAlturautil] = useState(CARACTERISTICAS['alturautil'])
 
     //Decalagem
     
