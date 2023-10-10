@@ -15,7 +15,7 @@ function Viga(svg,width, height) {
       .attr('y', rectY)
       .attr('width', rectWidth)
       .attr('height', rectHeight)
-      .attr('fill', '#D3D3D3')
+      .attr('fill', '#CDCDCD')
       .attr('stroke', 'black')
       .attr('stroke-width', 1)
       .attr('fill-opacity',0.7);

@@ -13,7 +13,7 @@ function Cota(svg,xinicio,xfinal) {
     .attr('x2',xfinal)
     .attr('y1',50)
     .attr('y2',50)
-    .attr('stroke', 'gray')
+    .attr('stroke', '#3E76A4')
     .attr('stroke-width', 1);
 
     
@@ -22,7 +22,7 @@ function Cota(svg,xinicio,xfinal) {
     .attr('x2',xinicio)
     .attr('y1',45)
     .attr('y2',55)
-    .attr('stroke', 'gray')
+    .attr('stroke', '#3E76A4')
     .attr('stroke-width', 1);
 
     const traco2 = svg.append('line')
@@ -30,7 +30,7 @@ function Cota(svg,xinicio,xfinal) {
     .attr('x2',xfinal)
     .attr('y1',45)
     .attr('y2',55)
-    .attr('stroke', 'gray')
+    .attr('stroke', '#3E76A4')
     .attr('stroke-width', 1);
 
     const texto = svg.append("text")
