@@ -32,11 +32,13 @@ const AncoragemViga = ()=>{
         Viga(svg,width,height)
 
 
-        let posicoes = [100,350,450,600]
+        let posicoes = [100,300,350,400,450,600]
+
+        let ancoragem = 15
 
         let linha = []
 
-        let barras = [Armaduras(svg,posicoes[0],posicoes[posicoes.length-1],height/2,0)]
+        let barras = [Armaduras(svg,posicoes[0],posicoes[posicoes.length-1],height/2,0,ancoragem)]
 
         let indice
 
@@ -59,15 +61,12 @@ const AncoragemViga = ()=>{
         }
 
 
-
-        
-
         posicoes.forEach((item,chave)=>{
             linha.push(limite(svg,item,height/2))
         })
 
-        //----------------------------------------------------------------------------------------------------------
-        //indice para compatibilizar os indices das linhas com as das barras
+//----------------------------------------------------------------------------------------------------------
+//indice para compatibilizar os indices das linhas com as das barras
         let indices_barras=[...Array(linha.length/2).keys()]
         let temp = [...Array(linha.length/2).keys()].reverse()
 
@@ -75,32 +74,36 @@ const AncoragemViga = ()=>{
             indices_barras.push(item)
         })
 
-        //----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 
         let segmentos = linha.slice(1,linha.length-1)
 
+        let test = []
+
+        for(let i=0;i<segmentos.length;i++){
+            test.push(segmentos[i].attr('x2'))
+        }
+
 
         //rodando a quantidade de segmentos possiveis
-        for(let i=1;i<=segmentos.length-1;i++){
+        for(let i=0;i<Math.floor((test.length)/2);i++){
+            
+
             barras.push(Armaduras(
                 svg,
-                parseFloat(segmentos[i-1].attr('x2')),
-                parseFloat(segmentos[i].attr('x2')),
+                parseInt(test[i]),
+                parseInt(test.reverse()[i]),
                 height/2,
-                15))
+                20*(1+i),
+                ancoragem))
         }
+
 //-----------------------------------------------------------------------
 
         
-
-
-
 //-----------------------------------------------------------------------
 
     const handleMouseDown = (e) => {
-
-
-
 
         for(let i =0; i<linha.length;i++){
             if(parseInt(linha[i].attr('x1'))+10+150>e.clientX & parseInt(linha[i].attr('x1'))-10+150<e.clientX){
@@ -192,7 +195,7 @@ const AncoragemViga = ()=>{
 
             if(indice<linha.length/2){
                 barras[indices_barras[indice]]
-                .attr('x1',newLineX1-10);
+                .attr('x1',newLineX1-ancoragem);
 
                 cotas[indice][0].attr('x2',newLineX1);
                 cotas[indice][2]
@@ -204,15 +207,15 @@ const AncoragemViga = ()=>{
                 .attr('x1',newLineX1);
 
                 cotas[indice][3].text(`${cotas[indice][0].attr('x2')-cotas[indice][0].attr('x1')}`)
-                .attr("x", (parseFloat(cotas[indice][0].attr('x2'))-parseFloat(cotas[indice][0].attr('x1')))/2+parseFloat(cotas[indice][0].attr('x1')));
+                .attr("x", (parseFloat(cotas[indice][0].attr('x2'))-parseFloat(cotas[indice][0].attr('x1')))/2+parseFloat(cotas[indice][0].attr('x1'))-7.5);
                 cotas[indice+1][3].text(`${cotas[indice+1][0].attr('x2')-cotas[indice+1][0].attr('x1')}`)
-                .attr("x", (parseFloat(cotas[indice+1][0].attr('x2'))-parseFloat(cotas[indice+1][0].attr('x1')))/2+parseFloat(cotas[indice+1][0].attr('x1')));
+                .attr("x", (parseFloat(cotas[indice+1][0].attr('x2'))-parseFloat(cotas[indice+1][0].attr('x1')))/2+parseFloat(cotas[indice+1][0].attr('x1'))-7.5);
 
             }
             else{ 
 
                 barras[indices_barras[indice]]
-                .attr('x2',newLineX2+10);
+                .attr('x2',newLineX2+ancoragem);
 
                 cotas[indice][0].attr('x2',newLineX1);
                 cotas[indice+1][0].attr('x1',newLineX1);
@@ -227,10 +230,10 @@ const AncoragemViga = ()=>{
 
                 cotas[indice][3]
                 .text(`${cotas[indice][0].attr('x2')-cotas[indice][0].attr('x1')}`)
-                .attr("x", (parseFloat(cotas[indice][0].attr('x2'))-parseFloat(cotas[indice][0].attr('x1')))/2+parseFloat(cotas[indice][0].attr('x1')));
+                .attr("x", (parseFloat(cotas[indice][0].attr('x2'))-parseFloat(cotas[indice][0].attr('x1')))/2+parseFloat(cotas[indice][0].attr('x1'))-7.5);
                 cotas[indice+1][3]
                 .text(`${cotas[indice+1][0].attr('x2')-cotas[indice+1][0].attr('x1')}`)
-                .attr("x", (parseFloat(cotas[indice+1][0].attr('x2'))-parseFloat(cotas[indice+1][0].attr('x1')))/2+parseFloat(cotas[indice+1][0].attr('x1')));
+                .attr("x", (parseFloat(cotas[indice+1][0].attr('x2'))-parseFloat(cotas[indice+1][0].attr('x1')))/2+parseFloat(cotas[indice+1][0].attr('x1'))-7.5);
               
             }
 
@@ -245,6 +248,8 @@ const AncoragemViga = ()=>{
     const handleMouseUp = () => {
         isDragging = false;
     };
+
+    
 
     svg.node().addEventListener('mousedown', handleMouseDown);
     svg.node().addEventListener('mousemove', handleMouseMove);
